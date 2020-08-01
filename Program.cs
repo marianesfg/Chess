@@ -2,6 +2,7 @@
 
 using tabuleiro;
 using xadrez;
+using xadrez_console.xadrez;
 
 namespace xadrez_console
 {
@@ -9,16 +10,28 @@ namespace xadrez_console
     {
         static void Main(string[] args)
         {
-            Posicao p = new Posicao(3, 4);
-            Tabuleiro tab = new Tabuleiro(8, 8);
+            try
+            {
+                //Posicao p = new Posicao(3, 4);
+                //Tabuleiro tab = new Tabuleiro(8, 8);
 
-            tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(0, 0));
-            tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(1, 3));
-            tab.colocarPeca(new Rei(tab, Cor.Preta), new Posicao(2, 4));
+                //tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(0, 0));
+                //tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(1, 3));
+                //tab.colocarPeca(new Rei(tab, Cor.Preta), new Posicao(9, 4));
 
-            Tela.imprimirTabuleiro(tab);
+                //Tela.imprimirTabuleiro(tab);
+
+                //Console.ReadLine();
+
+                PosicaoXadrez posicaoXadrez = new PosicaoXadrez('a', 1);
+                Console.WriteLine(posicaoXadrez);
+                Console.WriteLine(posicaoXadrez.toPosicao());
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             
-            Console.ReadLine();
         }
     }
 }
