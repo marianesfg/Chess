@@ -13,5 +13,31 @@ namespace xadrez
         {
             return "R";
         }
+
+        private bool podeMover(Posicao pos)
+        {
+            Peca p = tab.peca(pos);
+            return p == null || p.cor != this.cor;
+        }
+
+        public override bool[,] movimentosPossiveis()
+        {
+            bool[,] mat = new bool[tab.linhas, tab.colunas];
+            Posicao pos = new Posicao(0, 0);
+            
+            for (int l = posicao.linha - 1; l <= posicao.linha + 1; l++)
+            {
+                for (int c = posicao.coluna - 1; c <= posicao.coluna + 1; c++)
+                {
+                    if ((l != posicao.linha) || (c != posicao.coluna))
+                    {
+                        pos.definirValores(l, c);
+                        if (tab.posicaoValida(pos) && podeMover(pos))
+                            mat[pos.linha, pos.coluna] = true;
+                    }                    
+                }
+            }
+            return mat;
+        }
     }
 }
