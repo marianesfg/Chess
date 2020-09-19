@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using tabuleiro;
 
 namespace xadrez
@@ -11,6 +9,13 @@ namespace xadrez
 
         public int linha { get; set; }
 
+        public PosicaoXadrez(int coluna, int linha)
+        {
+
+            this.coluna = Convert.ToChar(96 + coluna);
+            this.linha = linha;
+        }
+
         public PosicaoXadrez(char coluna, int linha)
         {
             this.coluna = coluna;
@@ -19,7 +24,7 @@ namespace xadrez
 
         public Posicao toPosicao()
         {
-            return new Posicao(8 - this.linha, this.coluna - 'a');
+            return new Posicao(8 - this.linha, this.coluna - 'a');            
         }
 
         public override string ToString()
