@@ -11,17 +11,54 @@ namespace xadrez
         public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
 
+        private HashSet<Peca> pecas;
+        private HashSet<Peca> capturadas;
+
         public PartidaDeXadrez()
         { 
             tab = new Tabuleiro(8, 8);
             turno = 1;
             jogadorAtual = Cor.Branca;
             terminada = false;
+            pecas = new HashSet<Peca>();
+            capturadas = new HashSet<Peca>();
             colocarPecas();
+        }
+
+        private void colocarNovaPeca(char coluna, int linha, Peca peca)
+        {
+            tab.colocarPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
+            pecas.Add(peca);
+        }
+
+        public HashSet<Peca> pecasCapturadas(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca peca in capturadas)
+            {
+                if (cor == peca.cor)
+                    aux.Add(peca);
+            }
+            return aux;
+        }
+
+        public HashSet<Peca> pecasEmJogo(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+
+            foreach (Peca peca in pecas)
+            {
+                if (cor == peca.cor)
+                    aux.Add(peca);
+            }
+
+            aux.ExceptWith(pecasCapturadas(cor));
+            return aux;
         }
 
         private void colocarPecas()
         {
+            char col;
             List<EPecas> pecas;
                   
             pecas = new List<EPecas> { EPecas.Peao, EPecas.Torre, EPecas.Cavalo, EPecas.Bispo, EPecas.Rainha, EPecas.Rei };
@@ -40,8 +77,9 @@ namespace xadrez
                         if (i == 1) pos = resto / 10;
                         else pos = resto % 10;                          
                     }
-                    tab.colocarPeca(Factory.Criar(p, tab, Cor.Branca), new PosicaoXadrez(pos, 1 + peao).toPosicao());
-                    tab.colocarPeca(Factory.Criar(p, tab, Cor.Preta), new PosicaoXadrez(pos, 8 - peao).toPosicao());
+                    col = Convert.ToChar(96 + pos);
+                    colocarNovaPeca(col, 1 + peao, Factory.Criar(p, tab, Cor.Branca));
+                    colocarNovaPeca(col, 8 - peao, Factory.Criar(p, tab, Cor.Preta));          
                 }
             });
 
@@ -74,6 +112,8 @@ namespace xadrez
             p.incrementarQtdeMovimentos();
             Peca pCapturada = tab.retirarPeca(destino);
             tab.colocarPeca(p, destino);
+            if (pCapturada != null)
+                capturadas.Add(pCapturada);
         }
 
         public void realizaJogada(Posicao origem, Posicao destino)
