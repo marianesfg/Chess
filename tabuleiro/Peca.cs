@@ -18,10 +18,21 @@
             this.cor = cor;
             this.qtdeMovimentos = 0;
         }
+        
+        public bool podeMover(Posicao pos)
+        {
+            Peca p = tab.peca(pos);
+            return p == null || p.cor != this.cor;
+        }
 
         public void incrementarQtdeMovimentos()
         {
             qtdeMovimentos++;
+        }
+
+        public void decrementarQtdeMovimentos()
+        {
+            qtdeMovimentos--;
         }
 
         public abstract bool[,] movimentosPossiveis();

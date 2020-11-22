@@ -8,9 +8,6 @@ namespace xadrez_console
 {
     class Program : ITeste
     {
-
-        
-
         static void Main(string[] args)
         {
             try
@@ -20,7 +17,7 @@ namespace xadrez_console
                 //Tela.imprimirTabuleiro(partida.tab);
                 //Console.ReadLine();
 
-                while (! partida.terminada)
+                while (!partida.terminada)
                 {
                     try
                     {
@@ -39,23 +36,17 @@ namespace xadrez_console
                         partida.validarPosicaoDestino(origem, destino);
                         partida.realizaJogada(origem, destino);
                     }
-                    catch(TabuleiroException e)
+                    catch (TabuleiroException e)
                     {
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
                     }
                 }
-
-             
-                //PosicaoXadrez posicaoXadrez = new PosicaoXadrez('a', 1);
-                //Console.WriteLine(posicaoXadrez);
-                //Console.WriteLine(posicaoXadrez.toPosicao());
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            
         }
     }
 }
